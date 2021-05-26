@@ -138,7 +138,9 @@ public class DesignerServletAction extends RenderPageServletAction {
 	public void savePreviewData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String content=req.getParameter("content");
 		content=decodeContent(content);
-//		content = content.replaceAll("&","&amp;");
+		if(!content.contains("&amp;")){
+			content = content.replaceAll("&","&amp;");
+		}
 		InputStream inputStream=IOUtils.toInputStream(content,"utf-8");
 		ReportDefinition reportDef=reportParser.parse(inputStream,"p");
 		reportRender.rebuildReportDefinition(reportDef);
@@ -187,7 +189,9 @@ public class DesignerServletAction extends RenderPageServletAction {
 		file=ReportUtils.decodeFileName(file);
 		String content=req.getParameter("content");
 		content=decodeContent(content);
-		content = content.replaceAll("&","&amp;");
+		if(!content.contains("&amp;")){
+			content = content.replaceAll("&","&amp;");
+		}
 		ReportProvider targetReportProvider=null;
 		for(ReportProvider provider:reportProviders){
 			if(file.startsWith(provider.getPrefix())){

@@ -61,7 +61,13 @@ public class JdbcDatasourceDefinition implements DatasourceDefinition {
 		}
 		return list;
 	}
-	
+	private boolean isEncrypt(String password) {
+		if (password.startsWith("encrypt")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	private Connection getConnection() {
 		try {
 			Class.forName(driver);
